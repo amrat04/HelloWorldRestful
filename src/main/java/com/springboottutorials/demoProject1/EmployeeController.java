@@ -1,14 +1,17 @@
-package com.springboottutorials.demoProject1.controller;
+package com.springboottutorials.demoProject1;
 
+import com.springboottutorials.demoProject1.dto.LoginRequest;
+import com.springboottutorials.demoProject1.service.EmployeeService;
+import com.springboottutorials.demoProject1.service.EmployeeServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class EmployeeController {
 
+    @Autowired
+    EmployeeService employeeService;
 
     @GetMapping("/hello")
     @ResponseBody
@@ -35,6 +38,13 @@ public class EmployeeController {
     public String exampleWithRequestParameters(@RequestParam("district") String district, @RequestParam("datefor") String datefor){
 
         return "District ID : "+ district + " for the date : "+datefor;
+    }
+
+    @PostMapping("/authenticate")
+    @ResponseBody
+    public boolean authenticateUser(@RequestBody LoginRequest loginRequest){
+        Boolean isAuthenticated = employeeService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
+        return isAuthenticated;
     }
 
 }
