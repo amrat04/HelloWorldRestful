@@ -27,15 +27,6 @@ public class Employee {
     @OrderColumn(name="type")
     private List<Address> addressList;*/
 
-    @Column(name = "dob")
-    private String dob;
-
-    @Transient
-    private int age;
-
-    @Column(name="divison")
-    private int div;
-
     public int getEmpid() {
         return empid;
     }

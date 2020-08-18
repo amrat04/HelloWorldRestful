@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class EmployeeController {
 
     @Autowired
@@ -19,14 +19,14 @@ public class EmployeeController {
 
 
     @GetMapping("/hello")
-    @ResponseBody
+
     public String getBaseURL(){
 
         return "hello world!";
     }
 
     @GetMapping("/whether/{district}/{datefor}")
-    @ResponseBody
+
     public String exampleWithPathVariable(@PathVariable("district") String district,
                                           @PathVariable("datefor") String dateFor){
 
@@ -39,35 +39,35 @@ public class EmployeeController {
     }
 
     @GetMapping("/whether")
-    @ResponseBody
+
     public String exampleWithRequestParameters(@RequestParam("district") String district, @RequestParam("datefor") String datefor){
 
         return "District ID : "+ district + " for the date : "+datefor;
     }
 
     @PostMapping("/authenticate")
-    @ResponseBody
+
     public boolean authenticateUser(@RequestBody LoginRequest loginRequest){
         Boolean isAuthenticated = employeeService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         return isAuthenticated;
     }
 
     @GetMapping("/getemployees")
-    @ResponseBody
+
     public List<Employee> getEmployees(){
         List<Employee> list = employeeService.getAllEmployees();
         return list;
     }
 
     @PutMapping("/updatestudent")
-    @ResponseBody
+
     public String testPutService(@RequestBody String Username, String password){
         return "success";
     }
 
 
     @DeleteMapping("/deletestudent/{id}")
-    @ResponseBody
+
     public String testDeteleService(@PathVariable("id") int id){
 
         employeeService.deleteEmployee(id);
@@ -75,7 +75,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/saveemp")
-    @ResponseBody
+
     public Employee saveEmployee(@RequestBody Employee employee){
 
         Employee employee1 = employeeService.saveEmployee(employee);
