@@ -1,25 +1,40 @@
 package com.springboottutorials.demoProject1.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "employee")
 public class Employee {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int empid;
 
     private String name;
 
+    @Column(name="username")
     private String username;
 
+    @Column(name="password")
     private String password;
 
-    public Employee() {
+    @OneToOne(targetEntity=Address.class, cascade=CascadeType.ALL)
+    @JoinColumn(name="address")
+    private Address address;
 
-    }
+/*    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="studentid")
+    @OrderColumn(name="type")
+    private List<Address> addressList;*/
+
+    @Column(name = "dob")
+    private String dob;
+
+    @Transient
+    private int age;
+
+    @Column(name="divison")
+    private int div;
 
     public int getEmpid() {
         return empid;
@@ -51,5 +66,13 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

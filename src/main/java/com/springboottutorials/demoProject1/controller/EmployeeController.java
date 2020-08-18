@@ -1,17 +1,22 @@
-package com.springboottutorials.demoProject1;
+package com.springboottutorials.demoProject1.controller;
 
 import com.springboottutorials.demoProject1.dto.LoginRequest;
+import com.springboottutorials.demoProject1.entity.Address;
+import com.springboottutorials.demoProject1.entity.Employee;
+import com.springboottutorials.demoProject1.repository.EmployeeRepository;
 import com.springboottutorials.demoProject1.service.EmployeeService;
-import com.springboottutorials.demoProject1.service.EmployeeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class EmployeeController {
 
     @Autowired
     EmployeeService employeeService;
+
 
     @GetMapping("/hello")
     @ResponseBody
@@ -45,6 +50,37 @@ public class EmployeeController {
     public boolean authenticateUser(@RequestBody LoginRequest loginRequest){
         Boolean isAuthenticated = employeeService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
         return isAuthenticated;
+    }
+
+    @GetMapping("/getemployees")
+    @ResponseBody
+    public List<Employee> getEmployees(){
+        List<Employee> list = employeeService.getAllEmployees();
+        return list;
+    }
+
+    @PutMapping("/updatestudent")
+    @ResponseBody
+    public String testPutService(@RequestBody String Username, String password){
+        return "success";
+    }
+
+
+    @DeleteMapping("/deletestudent/{id}")
+    @ResponseBody
+    public String testDeteleService(@PathVariable("id") int id){
+
+        employeeService.deleteEmployee(id);
+        return "success";
+    }
+
+    @PostMapping("/saveemp")
+    @ResponseBody
+    public Employee saveEmployee(@RequestBody Employee employee){
+
+        Employee employee1 = employeeService.saveEmployee(employee);
+
+        return employee1;
     }
 
 }
